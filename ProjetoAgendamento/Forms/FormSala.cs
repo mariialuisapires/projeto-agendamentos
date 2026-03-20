@@ -32,26 +32,26 @@ namespace ProjetoAgendamento.Forms
             this.Size = new Size(650, 450);
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // Label
+            
             lblNome.ForeColor = CorTexto;
             lblNome.Font = new Font("Segoe UI", 10);
 
-            // TextBox
+           
             txtNome.BackColor = CorInput;
             txtNome.ForeColor = CorTexto;
             txtNome.BorderStyle = BorderStyle.FixedSingle;
             txtNome.Font = new Font("Segoe UI", 10);
 
-            // Botão Salvar
+         
             EstilizarBotao(btnSalvar, CorDestaque);
 
-            // Botão Editar
+            
             EstilizarBotao(btnEditar, CorSucesso);
 
-            // Botão Excluir
+           
             EstilizarBotao(btnExcluir, CorPerigo);
 
-            // DataGridView
+           
             EstilizarGrid(dgvSalas);
         }
 
