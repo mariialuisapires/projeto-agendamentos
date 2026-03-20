@@ -40,7 +40,6 @@
             cmbSala.Name = "cmbSala";
             cmbSala.Size = new Size(200, 28);
             cmbSala.TabIndex = 0;
-            cmbSala.SelectedIndexChanged += cmbSala_SelectedIndexChanged;
             // 
             // lblInicio
             // 
@@ -114,7 +113,7 @@
             // 
             // FormAgendamento
             // 
-            ClientSize = new Size(600, 440);
+            ClientSize = new Size(674, 524);
             Controls.Add(lblSala);
             Controls.Add(cmbSala);
             Controls.Add(lblInicio);
@@ -127,7 +126,6 @@
             Controls.Add(btnExcluir);
             Name = "FormAgendamento";
             Text = "FormAgendamento";
-            Load += FormAgendamento_Load;
             ((System.ComponentModel.ISupportInitialize)dgvAgendamentos).EndInit();
             ResumeLayout(false);
         }

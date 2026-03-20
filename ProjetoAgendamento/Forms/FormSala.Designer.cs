@@ -29,7 +29,7 @@
             lblNome.Size = new Size(100, 23);
             lblNome.TabIndex = 0;
             lblNome.Text = "Nome:";
-            lblNome.Click += lblNome_Click;
+
             // 
             // txtNome
             // 
@@ -85,7 +85,6 @@
             Controls.Add(btnExcluir);
             Name = "FormSala";
             Text = "FormSala";
-            Load += FormSala_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSalas).EndInit();
             ResumeLayout(false);
             PerformLayout();

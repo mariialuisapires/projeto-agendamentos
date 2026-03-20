@@ -12,11 +12,86 @@ namespace ProjetoAgendamento.Forms
 {
     public partial class FormAgendamento : Form
     {
+        private static readonly Color CorFundo = Color.FromArgb(18, 18, 18);
+        private static readonly Color CorPainel = Color.FromArgb(30, 30, 30);
+        private static readonly Color CorTexto = Color.FromArgb(220, 220, 220);
+        private static readonly Color CorDestaque = Color.FromArgb(49, 130, 206);
+        private static readonly Color CorSucesso = Color.FromArgb(56, 161, 105);
+        private static readonly Color CorPerigo = Color.FromArgb(229, 62, 62);
+        private static readonly Color CorInput = Color.FromArgb(45, 45, 45);
+
         public FormAgendamento()
         {
             InitializeComponent();
+            AplicarTema();
             CarregarSalas();
             CarregarAgendamentos();
+        }
+
+        private void AplicarTema()
+        {
+            this.BackColor = CorFundo;
+            this.ForeColor = CorTexto;
+            this.Text = "Gerenciar Agendamentos";
+            this.Font = new Font("Segoe UI", 10);
+            this.Size = new Size(650, 520);
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            lblSala.ForeColor = CorTexto;
+            lblInicio.ForeColor = CorTexto;
+            lblFim.ForeColor = CorTexto;
+
+            cmbSala.BackColor = CorInput;
+            cmbSala.ForeColor = CorTexto;
+            cmbSala.FlatStyle = FlatStyle.Flat;
+
+            dtpInicio.BackColor = CorInput;
+            dtpInicio.ForeColor = CorTexto;
+            dtpFim.BackColor = CorInput;
+            dtpFim.ForeColor = CorTexto;
+
+            EstilizarBotao(btnSalvar, CorDestaque);
+            EstilizarBotao(btnEditar, CorSucesso);
+            EstilizarBotao(btnExcluir, CorPerigo);
+
+            EstilizarGrid(dgvAgendamentos);
+        }
+
+        private void EstilizarBotao(Button btn, Color cor)
+        {
+            btn.BackColor = cor;
+            btn.ForeColor = Color.White;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btn.Cursor = Cursors.Hand;
+            btn.Height = 35;
+        }
+
+        private void EstilizarGrid(DataGridView grid)
+        {
+            grid.BackgroundColor = CorPainel;
+            grid.BorderStyle = BorderStyle.None;
+            grid.GridColor = Color.FromArgb(50, 50, 50);
+            grid.DefaultCellStyle.BackColor = CorPainel;
+            grid.DefaultCellStyle.ForeColor = CorTexto;
+            grid.DefaultCellStyle.SelectionBackColor = CorDestaque;
+            grid.DefaultCellStyle.SelectionForeColor = Color.White;
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
+            grid.ColumnHeadersDefaultCellStyle.ForeColor = CorDestaque;
+            grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(40, 40, 40);
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(35, 35, 35);
+            grid.EnableHeadersVisualStyles = false;
+            grid.RowHeadersVisible = false;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.ReadOnly = true;
+            grid.AllowUserToAddRows = false;
+            foreach (DataGridViewColumn col in grid.Columns)
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
         private void CarregarSalas()
@@ -46,13 +121,21 @@ namespace ProjetoAgendamento.Forms
             var tabela = new System.Data.DataTable();
             tabela.Load(reader);
             dgvAgendamentos.DataSource = tabela;
+
+            if (dgvAgendamentos.Columns.Count > 0)
+            {
+                dgvAgendamentos.Columns["id"].Visible = false;
+                dgvAgendamentos.Columns["sala"].HeaderText = "Sala";
+                dgvAgendamentos.Columns["data_inicio"].HeaderText = "Início";
+                dgvAgendamentos.Columns["data_fim"].HeaderText = "Fim";
+            }
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             if (cmbSala.SelectedItem == null)
             {
-                MessageBox.Show("Selecione uma sala.");
+                MostrarErro("Selecione uma sala.");
                 return;
             }
 
@@ -68,11 +151,11 @@ namespace ProjetoAgendamento.Forms
                 cmd.ExecuteNonQuery();
 
                 CarregarAgendamentos();
-                MessageBox.Show("Agendamento salvo com sucesso!");
+                MostrarSucesso("Agendamento salvo com sucesso!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                MostrarErro("Erro: " + ex.Message);
             }
         }
 
@@ -83,13 +166,21 @@ namespace ProjetoAgendamento.Forms
             var id = (int)dgvAgendamentos.CurrentRow.Cells["id"].Value;
 
             if (MessageBox.Show("Deseja excluir este agendamento?", "Confirmar",
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                using var conn = Conexao.ObterConexao();
-                using var cmd = new NpgsqlCommand("DELETE FROM agendamento WHERE id = @id", conn);
-                cmd.Parameters.AddWithValue("id", id);
-                cmd.ExecuteNonQuery();
-                CarregarAgendamentos();
+                try
+                {
+                    using var conn = Conexao.ObterConexao();
+                    using var cmd = new NpgsqlCommand("DELETE FROM agendamento WHERE id = @id", conn);
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.ExecuteNonQuery();
+                    CarregarAgendamentos();
+                    MostrarSucesso("Agendamento excluído com sucesso!");
+                }
+                catch (Exception ex)
+                {
+                    MostrarErro("Erro: " + ex.Message);
+                }
             }
         }
 
@@ -98,7 +189,7 @@ namespace ProjetoAgendamento.Forms
             if (dgvAgendamentos.CurrentRow == null) return;
             if (cmbSala.SelectedItem == null)
             {
-                MessageBox.Show("Selecione uma sala.");
+                MostrarErro("Selecione uma sala.");
                 return;
             }
 
@@ -117,22 +208,18 @@ namespace ProjetoAgendamento.Forms
                 cmd.ExecuteNonQuery();
 
                 CarregarAgendamentos();
-                MessageBox.Show("Agendamento atualizado com sucesso!");
+                MostrarSucesso("Agendamento atualizado com sucesso!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                MostrarErro("Erro: " + ex.Message);
             }
         }
 
-        private void cmbSala_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void MostrarSucesso(string msg) =>
+            MessageBox.Show(msg, "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        }
-
-        private void FormAgendamento_Load(object sender, EventArgs e)
-        {
-
-        }
+        private void MostrarErro(string msg) =>
+            MessageBox.Show(msg, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 }
