@@ -19,6 +19,7 @@
             dgvSalas = new DataGridView();
             btnEditar = new Button();
             btnExcluir = new Button();
+            btnVoltarMenu = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvSalas).BeginInit();
             SuspendLayout();
              
@@ -60,20 +61,28 @@
              
             btnEditar.Location = new Point(12, 288);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(94, 29);
+            btnEditar.Size = new Size(100, 33);
             btnEditar.TabIndex = 3;
             btnEditar.Text = "Editar";
             btnEditar.Click += btnEditar_Click;
-             
+
             // btnExcluir
-            
-            btnExcluir.Location = new Point(141, 288);
+
+            btnExcluir.Location = new Point(122, 288);
             btnExcluir.Name = "btnExcluir";
-            btnExcluir.Size = new Size(94, 29);
+            btnExcluir.Size = new Size(100, 33);
             btnExcluir.TabIndex = 4;
             btnExcluir.Text = "Excluir";
             btnExcluir.Click += btnExcluir_Click;
-             
+
+            // btnVoltarMenu
+            btnVoltarMenu.Location = new Point(232, 288);
+            btnVoltarMenu.Name = "btnVoltarMenu";
+            btnVoltarMenu.Size = new Size(180, 33);
+            btnVoltarMenu.TabIndex = 5;
+            btnVoltarMenu.Text = "← Voltar ao Menu";
+            btnVoltarMenu.Click += btnVoltarMenu_Click;
+
             // FormSala
              
             ClientSize = new Size(816, 652);
@@ -83,6 +92,7 @@
             Controls.Add(dgvSalas);
             Controls.Add(btnEditar);
             Controls.Add(btnExcluir);
+            Controls.Add(btnVoltarMenu);
             Name = "FormSala";
             Text = "FormSala";
             ((System.ComponentModel.ISupportInitialize)dgvSalas).EndInit();
@@ -96,5 +106,6 @@
         private System.Windows.Forms.DataGridView dgvSalas;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnExcluir;
+        private System.Windows.Forms.Button btnVoltarMenu;
     }
 }

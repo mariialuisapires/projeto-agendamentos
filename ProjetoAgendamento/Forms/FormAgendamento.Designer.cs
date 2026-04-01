@@ -15,6 +15,7 @@
         {
             lblSala = new Label();
             cmbSala = new ComboBox();
+            btnVoltarMenu = new Button();
             lblInicio = new Label();
             dtpInicio = new DateTimePicker();
             lblFim = new Label();
@@ -35,12 +36,20 @@
             lblSala.Text = "Sala:";
              
             // cmbSala
-             
+
             cmbSala.Location = new Point(120, 12);
             cmbSala.Name = "cmbSala";
             cmbSala.Size = new Size(200, 28);
             cmbSala.TabIndex = 0;
-             
+
+            // btnVoltarMenu
+            btnVoltarMenu.Location = new Point(232, 390);
+            btnVoltarMenu.Name = "btnVoltarMenu";
+            btnVoltarMenu.Size = new Size(180, 33);
+            btnVoltarMenu.TabIndex = 7;
+            btnVoltarMenu.Text = "← Voltar ao Menu";
+            btnVoltarMenu.Click += btnVoltarMenu_Click;
+
             // lblInicio
              
             lblInicio.Location = new Point(12, 55);
@@ -94,19 +103,19 @@
             dgvAgendamentos.TabIndex = 4;
              
             // btnEditar
-             
-            btnEditar.Location = new Point(300, 390);
+
+            btnEditar.Location = new Point(12, 390);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(94, 29);
+            btnEditar.Size = new Size(100, 33);
             btnEditar.TabIndex = 5;
             btnEditar.Text = "Editar";
             btnEditar.Click += btnEditar_Click;
-            
+
             // btnExcluir
-             
-            btnExcluir.Location = new Point(420, 390);
+
+            btnExcluir.Location = new Point(122, 390);
             btnExcluir.Name = "btnExcluir";
-            btnExcluir.Size = new Size(94, 29);
+            btnExcluir.Size = new Size(100, 33);
             btnExcluir.TabIndex = 6;
             btnExcluir.Text = "Excluir";
             btnExcluir.Click += btnExcluir_Click;
@@ -116,6 +125,7 @@
             ClientSize = new Size(674, 524);
             Controls.Add(lblSala);
             Controls.Add(cmbSala);
+            Controls.Add(btnVoltarMenu);
             Controls.Add(lblInicio);
             Controls.Add(dtpInicio);
             Controls.Add(lblFim);
@@ -132,6 +142,7 @@
 
         private System.Windows.Forms.Label lblSala;
         private System.Windows.Forms.ComboBox cmbSala;
+        private System.Windows.Forms.Button btnVoltarMenu;
         private System.Windows.Forms.Label lblInicio;
         private System.Windows.Forms.DateTimePicker dtpInicio;
         private System.Windows.Forms.Label lblFim;

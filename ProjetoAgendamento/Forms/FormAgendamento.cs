@@ -53,6 +53,7 @@ namespace ProjetoAgendamento.Forms
             EstilizarBotao(btnSalvar, CorDestaque);
             EstilizarBotao(btnEditar, CorSucesso);
             EstilizarBotao(btnExcluir, CorPerigo);
+            EstilizarBotao(btnVoltarMenu, CorDestaque);
 
             EstilizarGrid(dgvAgendamentos);
         }
@@ -214,6 +215,11 @@ namespace ProjetoAgendamento.Forms
             {
                 MostrarErro("Erro: " + ex.Message);
             }
+        }
+
+        private void btnVoltarMenu_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void MostrarSucesso(string msg) =>
