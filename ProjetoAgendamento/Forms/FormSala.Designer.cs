@@ -46,7 +46,7 @@
             btnSalvar.Size = new Size(94, 29);
             btnSalvar.TabIndex = 1;
             btnSalvar.Text = "Salvar";
-            btnSalvar.Click += button1_Click;
+            btnSalvar.Click += buttonSalvar_Click;
              
             // dgvSalas
              

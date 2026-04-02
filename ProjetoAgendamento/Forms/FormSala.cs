@@ -104,7 +104,7 @@ namespace ProjetoAgendamento.Forms
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonSalvar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
